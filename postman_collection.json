@@ -97,6 +97,7 @@
                   "  if (json.data) {",
                   "    pm.collectionVariables.set('referenceNo', json.data.referenceNo);",
                   "    pm.collectionVariables.set('categoryId', json.data.categoryId);",
+                  "    console.log('Payment URL for QR:', json.data.paymentUrl);",
                   "  }",
                   "}"
                 ]

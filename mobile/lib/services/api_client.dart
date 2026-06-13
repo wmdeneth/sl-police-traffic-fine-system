@@ -38,6 +38,16 @@ class ApiClient {
     return response.data as Map<String, dynamic>;
   }
 
+  Future<Map<String, dynamic>> getCategories() async {
+    final response = await dio.get('/categories');
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> issueFine(Map<String, dynamic> payload) async {
+    final response = await dio.post('/fines', data: payload);
+    return response.data as Map<String, dynamic>;
+  }
+
   Future<Map<String, dynamic>> processPayment(Map<String, dynamic> payload) async {
     final response = await dio.post('/payments', data: payload);
     return response.data as Map<String, dynamic>;

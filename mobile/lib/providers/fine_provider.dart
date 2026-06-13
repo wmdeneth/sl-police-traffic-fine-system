@@ -46,6 +46,31 @@ class FineNotifier extends StateNotifier<FineState> {
     }
   }
 
+  Future<void> issueFine({
+    required String categoryId,
+    required String driverName,
+    required String vehicleNo,
+    required String district,
+  }) async {
+    state = state.copyWith(isLoading: true, error: null);
+    try {
+      final response = await _api.issueFine({
+        'categoryId': categoryId,
+        'driverName': driverName,
+        'vehicleNo': vehicleNo,
+        'district': district,
+      });
+      if (response['success'] != true) {
+        throw Exception(response['message'] ?? 'Fine could not be issued');
+      }
+      state = FineState(fine: response['data'] as Map<String, dynamic>);
+    } catch (e) {
+      state = FineState(error: e.toString().replaceFirst('Exception: ', ''));
+    } finally {
+      state = state.copyWith(isLoading: false);
+    }
+  }
+
   void clear() {
     state = const FineState();
   }

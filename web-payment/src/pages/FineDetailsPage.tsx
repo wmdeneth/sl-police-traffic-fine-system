@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import { useNavigate, useParams, useLocation, useSearchParams } from 'react-router-dom';
 import { lookupFine, FineDetails } from '../services/api';
 
 export default function FineDetailsPage() {
   const { referenceNo } = useParams<{ referenceNo: string }>();
   const navigate = useNavigate();
   const location = useLocation();
+  const [searchParams] = useSearchParams();
+  const categoryIdFromQr = searchParams.get('categoryId');
   const [fine, setFine] = useState<FineDetails | null>(location.state?.fine ?? null);
   const [loading, setLoading] = useState(!fine);
   const [error, setError] = useState('');
@@ -18,6 +20,14 @@ export default function FineDetailsPage() {
       .catch(() => setError('Fine not found.'))
       .finally(() => setLoading(false));
   }, [referenceNo, fine]);
+
+  useEffect(() => {
+    if (!fine || !categoryIdFromQr) return;
+
+    if (fine.categoryId.toLowerCase() !== categoryIdFromQr.toLowerCase()) {
+      setError('Category ID in this QR code does not match the fine reference.');
+    }
+  }, [fine, categoryIdFromQr]);
 
   if (loading) {
     return (

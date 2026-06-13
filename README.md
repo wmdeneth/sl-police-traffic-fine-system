@@ -100,6 +100,9 @@ For physical device testing, use your local network IP (e.g. `http://10.55.111.7
 | GET | `/api/admin/collections/district` | ADMIN | Collections by district |
 | GET | `/api/admin/collections/category` | ADMIN | Collections by category |
 
+When an officer issues a fine, the response includes `paymentUrl` and `qrCodeDataUrl`.
+Show `qrCodeDataUrl` to the driver. The QR opens the payment portal at `/fine/{referenceNo}?categoryId={categoryId}`, auto-fills the fine details, and validates that the category matches.
+
 All responses use the `ApiResponse<T>` wrapper:
 
 ```json
@@ -122,6 +125,7 @@ jwt.secret=[256-bit-secret]
 notify.lk.user-id=[user-id]
 notify.lk.api-key=[api-key]
 notify.lk.notify-id=NotifyDEMO
+app.payment-web-base-url=http://localhost:3000
 ```
 
 ### web-payment / web-admin - `.env`

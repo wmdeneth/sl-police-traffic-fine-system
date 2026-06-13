@@ -25,6 +25,7 @@ public class FineService {
     private final FineCategoryRepository categoryRepository;
     private final UserRepository userRepository;
     private final ReferenceGenerator referenceGenerator;
+    private final FineQrService fineQrService;
 
     @Transactional
     public FineResponse issueFine(FineRequest request, String officerEmail) {
@@ -74,6 +75,8 @@ public class FineService {
     }
 
     private FineResponse toResponse(Fine fine) {
+        String paymentUrl = fineQrService.buildPaymentUrl(fine.getReferenceNo(), fine.getCategory().getId());
+
         return FineResponse.builder()
                 .id(fine.getId())
                 .referenceNo(fine.getReferenceNo())
@@ -86,6 +89,8 @@ public class FineService {
                 .status(fine.getStatus())
                 .issuedAt(fine.getIssuedAt())
                 .officerName(fine.getOfficer().getName())
+                .paymentUrl(paymentUrl)
+                .qrCodeDataUrl(fineQrService.generateQrCodeDataUrl(paymentUrl))
                 .build();
     }
 

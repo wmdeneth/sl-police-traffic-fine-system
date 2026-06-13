@@ -13,3 +13,6 @@ jwt.expiration=${JWT_EXPIRATION:86400000}
 notify.lk.user-id=${NOTIFY_LK_USER_ID:}
 notify.lk.api-key=${NOTIFY_LK_API_KEY:}
 notify.lk.notify-id=${NOTIFY_LK_NOTIFY_ID:NotifyDEMO}
+
+# Public URL used inside QR codes generated when an officer issues a fine.
+app.payment-web-base-url=${PAYMENT_WEB_BASE_URL:http://localhost:3000}

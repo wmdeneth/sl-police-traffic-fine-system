@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'constants.dart';
 import 'screens/login_screen.dart';
+import 'screens/startup_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/fine_details_screen.dart';
+import 'screens/issued_fine_screen.dart';
 import 'screens/payment_screen.dart';
 import 'screens/success_screen.dart';
 
@@ -16,21 +17,13 @@ void main() {
 
 final _routerProvider = Provider<GoRouter>((ref) {
   return GoRouter(
-    initialLocation: '/login',
-    redirect: (context, state) async {
-      final prefs = await SharedPreferences.getInstance();
-      final token = prefs.getString(AppConstants.tokenKey);
-      final isLoggedIn = token != null;
-      final isLoginRoute = state.matchedLocation == '/login';
-
-      if (!isLoggedIn && !isLoginRoute) return '/login';
-      if (isLoggedIn && isLoginRoute) return '/home';
-      return null;
-    },
+    initialLocation: '/startup',
     routes: [
+      GoRoute(path: '/startup', builder: (context, state) => const StartupScreen()),
       GoRoute(path: '/login', builder: (context, state) => const LoginScreen()),
       GoRoute(path: '/home', builder: (context, state) => const HomeScreen()),
       GoRoute(path: '/fine-details', builder: (context, state) => const FineDetailsScreen()),
+      GoRoute(path: '/issued-fine', builder: (context, state) => const IssuedFineScreen()),
       GoRoute(path: '/payment', builder: (context, state) => const PaymentScreen()),
       GoRoute(path: '/success', builder: (context, state) => const SuccessScreen()),
     ],

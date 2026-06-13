@@ -26,4 +26,6 @@ public class FineResponse {
     private FineStatus status;
     private Instant issuedAt;
     private String officerName;
+    private String paymentUrl;
+    private String qrCodeDataUrl;
 }
