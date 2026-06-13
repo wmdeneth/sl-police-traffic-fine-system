@@ -79,6 +79,21 @@ class LoginScreen extends HookConsumerWidget {
                     : const Text('Sign In', style: TextStyle(fontSize: 16)),
               ),
             ),
+            const SizedBox(height: 16),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                onPressed: () => context.push('/qr-scanner'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.white,
+                  foregroundColor: AppConstants.primaryColor,
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  side: const BorderSide(color: AppConstants.primaryColor),
+                ),
+                icon: const Icon(Icons.qr_code_scanner),
+                label: const Text('Scan QR to Pay Fine', style: TextStyle(fontSize: 16)),
+              ),
+            ),
           ],
         ),
       ),

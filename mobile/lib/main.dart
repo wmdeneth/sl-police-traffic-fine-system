@@ -9,6 +9,7 @@ import 'screens/fine_details_screen.dart';
 import 'screens/issued_fine_screen.dart';
 import 'screens/payment_screen.dart';
 import 'screens/success_screen.dart';
+import 'screens/qr_scanner_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,6 +27,7 @@ final _routerProvider = Provider<GoRouter>((ref) {
       GoRoute(path: '/issued-fine', builder: (context, state) => const IssuedFineScreen()),
       GoRoute(path: '/payment', builder: (context, state) => const PaymentScreen()),
       GoRoute(path: '/success', builder: (context, state) => const SuccessScreen()),
+      GoRoute(path: '/qr-scanner', builder: (context, state) => const QrScannerScreen()),
     ],
   );
 });

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../constants.dart';
 import '../providers/fine_provider.dart';
 
@@ -75,6 +76,23 @@ class IssuedFineScreen extends ConsumerWidget {
               _detailRow('Category', fine['categoryDescription']),
               _detailRow('District', fine['district']),
               const SizedBox(height: 24),
+              if (fine['paymentUrl'] != null)
+                ElevatedButton.icon(
+                  onPressed: () async {
+                    final url = Uri.parse(fine['paymentUrl']);
+                    if (await canLaunchUrl(url)) {
+                      await launchUrl(url);
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green.shade600,
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                  ),
+                  icon: const Icon(Icons.payment),
+                  label: const Text('Direct Go Pay'),
+                ),
+              const SizedBox(height: 8),
               ElevatedButton.icon(
                 onPressed: () => context.go('/home'),
                 style: ElevatedButton.styleFrom(
